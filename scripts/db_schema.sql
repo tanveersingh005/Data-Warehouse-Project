@@ -21,10 +21,10 @@ GO
 
 IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DataWarehouseProject')
 BEGIN
-	ALTER DATABASE DataWarehouseProject SET SINGLE_USER WITH ROLLBACK_IMMEDIATE;
+	ALTER DATABASE DataWarehouseProject SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 	DROP DATABASE DataWarehouseProject;
 	END
-GO;
+GO
 
 -- Create Database name 'DataWarehouseProject' --
 
@@ -35,11 +35,14 @@ GO
 
 -- Creating different schemas as per different layers --
 
-CREATE SCHEMA bronze;
+IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = 'bronze')
+    EXEC('CREATE SCHEMA bronze');
 GO
 
-CREATE SCHEMA silver;
+IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = 'silver')
+    EXEC('CREATE SCHEMA silver');
 GO
 
-CREATE SCHEMA gold;
+IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = 'gold')
+    EXEC('CREATE SCHEMA gold');
 GO
